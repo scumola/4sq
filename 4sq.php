@@ -184,14 +184,12 @@ function find_checkin_to_pri2_venues() {
     global $my_id;
     $num_checkins = 0;
     $result = mysql_query("select * from venues where m_checkinpriority is null and (m_lastCheckin is null or m_lastCheckin <= date_sub(now(), INTERVAL 15 hour)) and mayorid != '$my_id' order by mayorCount limit $checkin_limit");
-#    $result = mysql_query("select * from venues where m_checkinpriority is null and m_lastCheckin <= date_sub(now(), INTERVAL 1 day) and mayorid != '$my_id' order by mayorCount limit $checkin_limit");
     while ($row = mysql_fetch_assoc($result)) {
         $id = $row['id'];
         $lat = $row['lat'];
         $lng = $row['lng'];
         $new_lat = random_float($lat-0.0005,$lat+0.0005);
         $new_lng = random_float($lng-0.0005,$lng+0.0005);
-#        print ("$id, $lat, $lng, $new_lat, $new_lng\n");
         $json = fsq_checkin($id,$new_lat,$new_lng);
         $result2 = mysql_query("update venues set m_lastCheckin = now() where id = '$id'");
         $num_checkins++;
