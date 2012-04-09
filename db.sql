@@ -1,3 +1,5 @@
+
+
 CREATE TABLE `venues` (
   `id` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
