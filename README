@@ -1,4 +1,10 @@
 This is just some PHP code that I wrote to grab data from the foursquare.com
 API using PHP.
 
-- Steve Webb (bigwebb@gmail.com)
+cp config_sample.php config.php # and edit accordingly, then
+mysqladmin create 4sq
+mysql 4sq < db.sql
+
+Then you're off and running!
+
+- Steve
