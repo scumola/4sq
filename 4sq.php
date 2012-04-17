@@ -65,7 +65,7 @@ function fsq_check_checkin_results($json) {
     $id = $data->response->checkin->venue->id;
     $name = $data->response->checkin->venue->name;
     if ($isMayor == 'true') {
-        print ("Yea, we're now the new mayor of $name\n");
+            print " MAYOR";
         mysql_query("update venues set mayorid = '$my_id' where id = '$id'");
     }
 }
@@ -93,7 +93,7 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     }
     foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
     rtrim($fields_string,'&');
-    print ("Checking into: $venueId\n");
+    print ("Checking into: $venueId");
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, count($fields));
@@ -101,9 +101,11 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $result = curl_exec($ch);
     curl_close($ch);
+    print " EMAILING";
     mail('bigwebb@gmail.com', "[4sq checkin] $venueId", $result);
     fsq_check_checkin_results($result);
-    sleep(3);
+    print " DONE\n";
+#    sleep(3);
     return $result; # json
 }
 
@@ -142,7 +144,6 @@ function fsq_search_parse($json) {
 }
 
 function fsq_pull_all_venue_details() {
-    $result = mysql_query("update venues set mayorId = 0, `m_lastVenueDetails` = NULL");
     $result = mysql_query("select * from venues where mayorId = 0 and m_lastVenueDetails is NULL");
     while ($row = mysql_fetch_assoc($result)) {
         $id = $row['id'];
@@ -213,7 +214,12 @@ if ($argv[1] == 'search') {
     fsq_search_for_more_venues();
 }
 
+if ($argv[1] == 'scan') {
+    fsq_pull_all_venue_details();
+}
+
 if ($argv[1] == 'rescan') {
+    $result = mysql_query("update venues set mayorId = 0, `m_lastVenueDetails` = NULL");
     fsq_pull_all_venue_details();
 }
 
