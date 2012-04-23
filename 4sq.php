@@ -115,7 +115,7 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     mail('bigwebb@gmail.com', "[4sq checkin] $venueId", $result);
     $msg = fsq_check_checkin_results($result);
     print " DONE\n";
-    if ($msg != "") {}
+    if ($msg != "") {
         print "$msg\n";
     }
     sleep(3);
