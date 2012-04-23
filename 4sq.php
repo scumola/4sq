@@ -68,6 +68,16 @@ function fsq_check_checkin_results($json) {
             print " MAYOR";
         mysql_query("update venues set mayorid = '$my_id' where id = '$id'");
     }
+    $msg = "";
+    foreach ($data->notifications as $notification) {
+        if ($notification->type == 'mayorship') {
+            $msg .= "\t".$notification->item->message."\n";
+        }
+        if ($notification->type == 'message') {
+            $msg .= "\t".$notification->item->message."\n";
+        }
+    }
+    return($msg);
 }
 
 function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
@@ -103,10 +113,12 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     curl_close($ch);
     print " EMAILING";
     mail('bigwebb@gmail.com', "[4sq checkin] $venueId", $result);
-    fsq_check_checkin_results($result);
-    print " DONE";
-    print " SLEEP(15)\n";
-    sleep(15);
+    $msg = fsq_check_checkin_results($result);
+    print " DONE\n";
+    if ($msg != "") {}
+        print "$msg\n";
+    }
+    sleep(3);
     return $result; # json
 }
 
