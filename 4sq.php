@@ -83,6 +83,7 @@ function fsq_check_checkin_results($json) {
 function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     global $oauth_token;
     global $app_version;
+    global $email;
     $fields_string = "";
     $url = "https://api.foursquare.com/v2/checkins/add";
     if ($lat == 0.0) {
@@ -112,7 +113,7 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     $result = curl_exec($ch);
     curl_close($ch);
     print " EMAILING";
-    mail('bigwebb@gmail.com', "[4sq checkin] $venueId", $result);
+    mail($email, "[4sq checkin] $venueId", $result);
     $msg = fsq_check_checkin_results($result);
     print " DONE\n";
     if ($msg != "") {

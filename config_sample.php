@@ -8,5 +8,6 @@ $mysql_user = "xxxxx";
 $mysql_passwd = "xxxxx";
 
 $my_id = "2709033"; # replace with your foursquare user id
+$email = "bigwebb@gmail.com"; # replace with your email address
 $checkin_limit = 3; # number of times to check in in this round (3 every 15 mins will avoid the "slow down" message)
 ?>
