@@ -112,8 +112,8 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $result = curl_exec($ch);
     curl_close($ch);
-    print " EMAILING";
-    mail($email, "[4sq checkin] $venueId", $result);
+#    print " EMAILING";
+#    mail($email, "[4sq checkin] $venueId", $result);
     $msg = fsq_check_checkin_results($result);
     print " DONE\n";
     if ($msg != "") {
