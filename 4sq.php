@@ -136,7 +136,13 @@ function fsq_venue_parse($json) {
     $mayorCount = $data->response->venue->mayor->count;
     $id = $data->response->venue->id;
     mysql_query("update venues set mayorId = '$mayorId', mayorCount = '$mayorCount', m_lastVenueDetails = now() where id = '$id'");
-    print ("$id $mayorId $mayorCount\n");
+    if ($id == "") {
+        $error = $data->meta->errorDetail;
+        print ("$error\n");
+        exit(0);
+    } else {
+        print ("$id $mayorId $mayorCount\n");
+    }
 }
 
 function fsq_search_parse($json) {
@@ -158,7 +164,7 @@ function fsq_search_parse($json) {
 }
 
 function fsq_pull_all_venue_details() {
-    $result = mysql_query("select * from venues where mayorId = 0 and m_lastVenueDetails is NULL");
+    $result = mysql_query("select * from venues where mayorId = 0 and m_lastVenueDetails is NULL limit 450");  # 4sq venue detail limit is 500/hr
     while ($row = mysql_fetch_assoc($result)) {
         $id = $row['id'];
         $response = fsq_venue_details($id);  # deli zone
