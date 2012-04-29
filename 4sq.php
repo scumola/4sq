@@ -119,7 +119,7 @@ function fsq_checkin($venueId,$lat=0.0,$lng=0.0) {
     if ($msg != "") {
         print "$msg\n";
     }
-    sleep(3);
+    sleep(15);
     return $result; # json
 }
 
