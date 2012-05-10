@@ -5,6 +5,9 @@ cp config_sample.php config.php # and edit accordingly, then
 mysqladmin create 4sq
 mysql 4sq < db.sql
 
+You'll need to submit one venue before you can do a "search" to populate other
+venues near it, but that's about it.
+
 Then you're off and running!
 
 - Steve
